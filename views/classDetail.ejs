@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta charset="UTF-8">
+  <title><%= classData.name %> - Details</title>
+</head>
+<body>
+  <h1>Class: <%= classData.name %></h1>
+  <p><strong>Instructor:</strong> <%= classData.instructor %></p>
+  <p><strong>Description:</strong> <%= classData.description %></p>
+  <p><strong>Schedule:</strong> <%= classData.schedule %></p>
+
+  <a href="/class/<%= classData._id %>/join">Join this class</a>
+</body>
+</html>

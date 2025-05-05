@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/H (1).png" type="image/png">
+  <title>Create New Class</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input, textarea, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.7rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Create New Class</h1>
+
+  <form action="/class/create" method="POST">
+    <label for="title">Class Title</label>
+    <input type="text" id="title" name="title" placeholder="Enter class title" required>
+  
+    <label for="description">Class Description</label>
+    <textarea id="description" name="description" placeholder="Enter class description" required></textarea>
+  
+    <label for="jitsiLink">Jitsi Link</label>
+    <input type="url" id="jitsiLink" name="jitsiLink" placeholder="Enter Jitsi Meet Link" required>
+  
+    <label for="scheduledTime">Scheduled Time</label>
+    <input type="datetime-local" id="scheduledTime" name="scheduledTime" required>
+  
+    <button type="submit">Create Class</button>
+  </form>
+  
+  
+</body>
+</html>

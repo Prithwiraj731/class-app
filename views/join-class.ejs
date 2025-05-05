@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <title>Join Class - <%= classData.title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    :root {
+      --bg-color: #f5f8fa;
+      --text-color: #000;
+      --accent: #065cdd;
+      --live-color: green;
+    }
+
+    body.dark {
+      --bg-color: #1e1e1e;
+      --text-color: #fff;
+      --accent: #7ab5ff;
+      --live-color: #00e676;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .top-bar {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .top-bar button {
+      padding: 8px 14px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: var(--accent);
+      color: white;
+      transition: background 0.2s;
+    }
+
+    .top-bar button:hover {
+      background-color: #044aaf;
+    }
+
+    #loading-message {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin: 10px 0;
+      text-align: center;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    #live-message {
+      display: none;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--live-color);
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    .iframe-wrapper {
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      margin-top: 10px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .participant-count {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: var(--text-color);
+    }
+
+    @media (max-width: 768px) {
+      #loading-message, #live-message {
+        font-size: 1.1rem;
+      }
+
+      .iframe-wrapper {
+        aspect-ratio: 16 / 10;
+        border-radius: 12px;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-bar button {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Controls -->
+  <div class="top-bar">
+    <button onclick="window.location.href='/dashboard'">🏠 Back to Dashboard</button>
+    <button onclick="toggleDarkMode()" id="darkToggle">🌙 Dark Mode</button>
+  </div>
+
+  <!-- Loading -->
+  <div id="loading-message">
+    <p>Please wait while we are connecting you to your: <%= classData.title %>...</p>
+  </div>
+
+  <!-- Live -->
+  <div id="live-message">
+    <h2>You are live now 🎥</h2>
+  </div>
+
+  <!-- Iframe Container -->
+  <div class="iframe-wrapper" id="meet-container">
+    <!-- Jitsi will load here -->
+  </div>
+
+  <!-- Participant count -->
+  <div class="participant-count" id="participant-count">👥 Participants: 0</div>
+
+  <script src='https://meet.jit.si/external_api.js'></script>
+  <script>
+    // Dark mode toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById("darkToggle");
+      btn.textContent = document.body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+
+    // Show live message
+    setTimeout(() => {
+      document.getElementById('loading-message').style.display = 'none';
+      document.getElementById('live-message').style.display = 'block';
+    }, 3000);
+
+    // Jitsi Meet Embed
+    const domain = "meet.jit.si";
+    const options = {
+      roomName: "<%= classData.jitsiRoomName %>", // pass `jitsiRoomName` from backend
+      parentNode: document.querySelector('#meet-container'),
+      configOverwrite: {
+        disableDeepLinking: true
+      },
+      interfaceConfigOverwrite: {
+        SHOW_JITSI_WATERMARK: false,
+        SHOW_WATERMARK_FOR_GUESTS: false
+      }
+    };
+
+    const api = new JitsiMeetExternalAPI(domain, options);
+
+    // Live participant count
+    function updateParticipantCount() {
+      api.getParticipantsInfo().then(participants => {
+        document.getElementById('participant-count').innerText = `👥 Participants: ${participants.length}`;
+      });
+    }
+
+    api.addEventListener('participantJoined', updateParticipantCount);
+    api.addEventListener('participantLeft', updateParticipantCount);
+    api.addEventListener('videoConferenceJoined', updateParticipantCount);
+  </script>
+</body>
+</html>

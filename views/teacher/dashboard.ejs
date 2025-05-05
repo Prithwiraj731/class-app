@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Dashboard</title>
+  <link rel="icon" href="images/H (1).png" type="image/png">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f4f4f9;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 100px;
+    }
+
+    header {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #27ae60;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      z-index: 999;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo h1 {
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      text-transform: uppercase;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      padding: 5px 10px;
+    }
+
+    .logo h1 span {
+      color: #FF4500;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+    }
+
+    .header-title a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    .logout-button {
+      background: #fff;
+      color: #27ae60;
+      padding: 8px 18px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid transparent;
+      transition: 0.3s;
+    }
+
+    .logout-button:hover {
+      background: transparent;
+      color: #fff;
+      border-color: #fff;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .form-section, .class-list-section {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+
+    .form-section h2, .class-list-section h3 {
+      color: #27ae60;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+    }
+
+    form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    form button {
+      background: #27ae60;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s;
+    }
+
+    form button:hover {
+      background: #2ecc71;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .class-table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+    }
+
+    .class-table th, .class-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .class-table th {
+      background: #27ae60;
+      color: white;
+    }
+
+    .class-table tr:hover {
+      background: #f0f8f5;
+    }
+
+    .class-table a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+
+    .class-table a:hover {
+      text-decoration: underline;
+    }
+
+    .loading {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #27ae60;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .header-title a {
+        font-size: 1.3rem;
+      }
+      .logo h1 {
+        font-size: 1.4rem;
+      }
+      .logout-button {
+        padding: 6px 14px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <h1>H<span>U</span>R</h1>
+    </div>
+    <div class="header-title">
+      <a href="/">Teacher Dashboard</a>
+    </div>
+    <a href="/logout" class="logout-button">Logout</a>
+  </header>
+
+  <main>
+    <section class="form-section">
+      <h2>Add New Class</h2>
+      <form action="/teacher/add-class" method="POST">
+        <input type="text" name="title" placeholder="Class Title" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        <input type="text" name="jitsiLink" placeholder="Jitsi Link" required>
+        <input type="datetime-local" name="scheduledTime" required>
+        <input type="text" name="teacherName" placeholder="Teacher Name" required>
+        <input type="tel" name="contactNumber" placeholder="Contact Number" required pattern="^\+?[0-9\s\-]{7,15}$" title="Enter valid phone number">
+        <input type="text" name="address" placeholder="Address" required>
+        <button type="submit">Add Class</button>
+      </form>
+    </section>
+
+    <section class="class-list-section">
+      <h3>Your Classes</h3>
+      <div class="table-container">
+        <table class="class-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Scheduled Time</th>
+              <th>Link</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% classes.forEach(cls => { %>
+              <tr>
+                <td><%= cls.title %></td>
+                <td><%= new Date(cls.scheduledTime).toLocaleString() %></td>
+                <td><a href="<%= cls.jitsiLink %>" target="_blank" rel="noopener noreferrer">Join</a></td>
+                <td><a href="/class/<%= cls._id %>">Open</a></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="loading">Logging you out...</div>
+
+  <script>
+    document.querySelector('.logout-button').addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector('.loading').style.display = 'block';
+      setTimeout(() => {
+        window.location.href = '/logout';
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
