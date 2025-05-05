@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const path = require("path");
 const http = require("http");
-const bcrypt = require('bcryptjs');
 const socketIO = require("socket.io");
 require("dotenv").config();
 
