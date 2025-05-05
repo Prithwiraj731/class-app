@@ -6,6 +6,7 @@ const path = require("path");
 const http = require("http");
 const socketIO = require("socket.io");
 require("dotenv").config();
+const bcrypt = require('bcryptjs');
 
 // Route imports
 const authRoutes = require("./routes/auth");
