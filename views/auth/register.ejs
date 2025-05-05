@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="images/H (1).png" type="image/png">
+  <title>Register</title>
+  <style>
+    :root {
+      --bg-color: #f4f4f9;
+      --text-color: #333;
+      --card-bg: #fff;
+      --primary: #27ae60;
+      --button-hover: #219150;
+    }
+
+    body.dark {
+      --bg-color: #1e1e1e;
+      --text-color: #f1f1f1;
+      --card-bg: #2b2b2b;
+      --primary: #2ecc71;
+      --button-hover: #27ae60;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 10px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .top-controls {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      max-width: 450px;
+      width: 100%;
+    }
+
+    .top-controls button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--primary);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .top-controls button:hover {
+      background-color: var(--button-hover);
+    }
+
+    .register-container {
+      background-color: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      transition: background-color 0.3s;
+    }
+
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      text-transform: uppercase;
+      text-align: center;
+      border: 2px solid var(--primary);
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .logo span {
+      color: #FF4500;
+      font-size: 1.2em;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+      animation: bounce 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .register-container h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, select {
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: #fff;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    body.dark input,
+    body.dark select {
+      background-color: #444;
+      color: #f1f1f1;
+      border-color: #666;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    button[type="submit"] {
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: var(--button-hover);
+    }
+
+    @media (max-width: 480px) {
+      .register-container {
+        padding: 30px 20px;
+      }
+
+      .register-container h2 {
+        font-size: 1.7rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+      }
+
+      .top-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Buttons -->
+  <div class="top-controls">
+    <button onclick="toggleDarkMode()" id="darkToggle">🌙 Dark Mode</button>
+  </div>
+
+  <!-- Register Form -->
+  <div class="register-container">
+    <div class="logo">
+      <h1>H<span>U</span>R</h1>
+    </div>
+    <h2>Register</h2>
+    <form action="/register" method="POST">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <select name="role" required>
+        <option value="" disabled selected>Select your role</option>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkToggle');
+      btn.textContent = document.body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="images/favicon.ico"> -->
+
+  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="images/H (1).png" type="image/png">
+  <title>Student Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    header {
+      width: 100%;
+      background-color: #27ae60;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
+    .header-title {
+      font-size: 2rem;
+      color: white;
+      font-weight: bold;
+    }
+
+    .header-title a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .logout-btn a {
+      font-size: 1rem;
+      color: white;
+      background-color: #e74c3c;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .logout-btn a:hover {
+      background-color: #c0392b;
+    }
+
+    main {
+      margin-top: 120px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #27ae60;
+      margin-bottom: 10px;
+      text-align: center;
+      width: 100%;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #7f8c8d;
+      margin-bottom: 20px;
+    }
+
+    .class_session {
+      background-color: #fff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .class_session h3 {
+      font-size: 1.8rem;
+      color: #2980b9;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+      font-size: 1rem;
+    }
+
+    th {
+      background-color: #27ae60;
+      color: white;
+    }
+
+    td a {
+      color: #2980b9;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    td a:hover {
+      color: #2ecc71;
+    }
+
+    .loading {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      color: #27ae60;
+      font-weight: bold;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @media (max-width: 1024px) {
+      .header-title {
+        font-size: 1.5rem;
+      }
+
+      .logout-btn a {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .class_session h3 {
+        font-size: 1.6rem;
+      }
+
+      th, td {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .class_session h3 {
+        font-size: 1.5rem;
+      }
+
+      th, td {
+        font-size: 0.95rem;
+      }
+
+      .logout-btn a {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        text-align: left;
+      }
+
+      .header-title {
+        font-size: 1.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .class_session h3 {
+        font-size: 1rem;
+
+      }
+
+      th, td {
+        font-size: 0.6rem;
+      }
+
+      .logout-btn a {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+
+      /* .logo {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        cursor: pointer;
+        
+      } */
+   
+      .header-title {
+        font-size: 0.7rem;
+        color: #27ae60;
+        margin-left: 10px;
+      }
+    }
+
+    /* logo style */
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      position: relative;
+      border: 2px solid white;
+      padding: 15px;
+      /* margin-left: 15px; */
+      border-radius: 15px;
+      text-shadow: #FF4500;
+      cursor: pointer;
+    }
+
+   
+    .logo span {
+      color: #FF4500;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-50px);
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div>
+      <h1 class="logo">H<span>U</span>R</h1>
+    </div>
+    <div class="header-title">
+      <a href="/">Student Dashboard</a>
+    </div>
+    <div class="logout-btn">
+      <a href="/logout" id="logoutLink">Logout</a>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main>
+    <h1>
+      Welcome, <%= user.username %>!
+    </h1>
+    
+    <p>You are logged in as a student.</p>
+
+    <div class="class_session">
+      <h3>Available Classes</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Class Title</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% classes.forEach((cls, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= cls.title %></td>
+              <td><a href="/class/<%= cls._id %>">Open</a></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="loading">Logging you out...</div>
+  </main>
+
+  <script>
+    document.getElementById('logoutLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector('.loading').style.display = 'block';
+      setTimeout(() => {
+        window.location.href = '/logout';
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>

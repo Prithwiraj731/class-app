@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/detail.css">
+  <title>Class Detail</title>
+</head>
+<body>
+  <h1><%= classData.name %></h1>
+  <p>Teacher: <%= classData.teacherName %></p>
+  <p>Description: <%= classData.description %></p>
+  
+  <h3>Schedule:</h3>
+  <% if (Array.isArray(classData.schedule) && classData.schedule.length > 0) { %>
+    <ul>
+      <% classData.schedule.forEach(function(time) { %>
+        <li><%= time %></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No schedule available.</p>
+  <% } %>
+
+  <p>Meeting Link: 
+    <a href="/class/680132375557e06398f3b7e2/join">Join here</a>
+
+  </p>
+</body>
+</html>

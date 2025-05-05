@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= course.title %> | Virtual Class</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* Base reset and box-sizing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Style for the iframe */
+    iframe {
+      width: 100%;
+      height: 80vh;
+      border: 5px solid green;
+      margin-top: 20px;
+      border-radius: 15px;
+      display: none; /* Initially hidden */
+    }
+
+    /* Live message container */
+    .live {
+      text-align: center;
+      display: none; /* Hide initially */
+      padding: 20px;
+    }
+
+    .live h1 {
+      color: green;
+      text-transform: capitalize;
+      font-size: 2.5rem;
+    }
+
+    .text {
+      text-transform: uppercase;
+      color: blue;
+      font-size: 1.1rem;
+    }
+
+    /* Loading screen style */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-size: 24px;
+      font-weight: bold;
+      color: green;
+      animation: fadeOut 3s forwards;
+    }
+
+    /* Animation for fading out loading message */
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .live h1 {
+        font-size: 2rem;
+      }
+      
+      .text {
+        font-size: 1rem;
+      }
+      
+      iframe {
+        height: 60vh; /* Adjust iframe height on smaller screens */
+      }
+
+      .loading p {
+        font-size: 18px; /* Smaller loading text for mobile screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .live h1 {
+        font-size: 1.5rem;
+      }
+
+      .text {
+        font-size: 0.9rem;
+      }
+
+      iframe {
+        height: 50vh; /* Further adjust iframe height for very small screens */
+      }
+
+      .loading p {
+        font-size: 16px; /* Even smaller loading text for very small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading screen -->
+  <div class="loading">
+    <p>Loading...</p>
+  </div>
+
+  <!-- Live message and course details -->
+  <div class="live">
+    <h1><%= course.title %></h1>
+    <p><strong class="text">Description:</strong> <%= course.description %></p>
+    <p><strong class="text">Scheduled Time:</strong> <%= new Date(course.scheduledTime).toLocaleString() %></p>
+
+    <!-- Live session message -->
+    <h2>You are going live!</h2>
+  </div>
+
+  <!-- Embed Jitsi Meet link directly -->
+  <iframe src="<%= course.jitsiLink %>" allow="camera; microphone; fullscreen; display-capture" allowfullscreen></iframe>
+
+  <script>
+    // JavaScript to manage loading transition and reveal the live session
+    window.onload = function() {
+      // Simulate a loading time before showing the iframe and "You are going live" message
+      setTimeout(function() {
+        // Hide the loading screen
+        document.querySelector('.loading').style.display = 'none';
+        
+        // Show the live session details and iframe
+        document.querySelector('.live').style.display = 'block';
+        document.querySelector('iframe').style.display = 'block';
+      }, 3000); // Set delay for loading (3 seconds here, adjust as needed)
+    };
+  </script>
+</body>
+</html>
